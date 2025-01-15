@@ -1,15 +1,126 @@
-/* Ajout des fonts */
+
+/*ETAPE 1 : STYLE POUR LE HEADER/FOOTER_______________________________________________________*/
+
+/* ---Ajout des fonts de google font--- */
+
 @font-face {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
-  }
-  
-  @font-face {
-    font-family: 'Space Mono';
-    font-style: normal;
-    font-weight: 700;
-    src: url('../fonts/Space_Mono/SpaceMono-Regular.ttf') format('truetype');
-  }
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Space_Mono/SpaceMono-italic.ttf') format('truetype');
+}
+
+/* ---style header--- */
+
+.header_content {
+  display: flex;
+  align-items: center;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  background-color: #fff;
+  position: fixed;
+  box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03);
+  height: 85px;
+  padding: 0 146px;
+}
+
+.main-nav {
+  display: flex;
+}
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 50px;
+}
+
+/* ---size logo---*/
+
+.logo img {
+  width: 216px;
+}
+
+/* ---style maquette des polices h1,H2...--- */
+
+* {   /*   "*" permet la sélections de tout les élément de la page */
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+h1 {
+  font-family: 'Space Mono', sans-serif;
+  font-size: 6em;
+  font-style: italic;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: 'Space Mono', sans-serif;
+  font-size: 4.125em;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 1em;
+}
+
+h3 {
+  font-family: 'Space Mono', sans-serif;
+  font-size: 1.125em;
+  text-transform: uppercase;
+}
+
+p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875em;
+  font-weight: 300;
+}
+
+a, .droit-footer {
+  font-family: 'Space Mono', italic;
+  font-size: 1em;
+  text-transform: uppercase;   /*transforme le texte en majuscules */
+  color: inherit;
+  font-weight: 400;
+}
+
+a:hover, .droit-footer:hover {
+  text-decoration: underline;
+}
+
+/* ---Footer--- */
+
+.menu-footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 86px;
+  height: 40px;
+  border-top: 1px solid black;
+  padding: 1px 0px 8px 0px;
+}
+
+.menu-footer ul {
+  display: flex;
+  gap: 85px;
+}
+
+
+
+
 

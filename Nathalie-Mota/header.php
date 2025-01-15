@@ -10,7 +10,7 @@
 
 <body <?php body_class(); ?>>
     <header>
-        <div class="headerContainer">
+        <div class="header_content">
             <div class="logo">
                 <a href="<?php echo home_url( '/' ); ?>" aria-label="page d'accueil">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.png" alt="Logo">
@@ -22,3 +22,4 @@
             <?php wp_nav_menu(array('theme_location' => 'header')); ?>
         </nav>
     </header>
+</body>
