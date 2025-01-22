@@ -19,20 +19,17 @@
 
 /* ---style header--- */
 
-.header_content {
-  display: flex;
-  align-items: center;
-}
-
 header {
-  display: flex;
-  align-items: center;
   width: 100%;
+  display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #fff;
   position: fixed;
-  box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03);
-  height: 85px;
+  box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03); 
+  z-index: 1000;
+  overflow-y: auto;
+  height: 80px;
   padding: 0 146px;
 }
 
@@ -53,7 +50,30 @@ header {
   width: 216px;
 }
 
-/* ---style maquette des polices h1,H2...--- */
+/* permet de pousser le footer en bas et test hero apres le header*/
+
+/* Style global de la page */
+html, body {
+  height: 100%;  
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column; /* Organise le contenu en une colonne */
+  justify-content: space-between; /* Pousse le footer vers le bas */
+}
+
+.hero {
+  margin-top: 80px;  
+  padding: 25px;
+  background-color: #e0e0fa; 
+}
+
+.hero-banner {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
 
 * {   /*   "*" permet la sélections de tout les élément de la page */
   margin: 0;
@@ -61,27 +81,6 @@ header {
   text-decoration: none;
   box-sizing: border-box;
   list-style: none;
-}
-
-h1 {
-  font-family: 'Space Mono', sans-serif;
-  font-size: 6em;
-  font-style: italic;
-  font-weight: 700;
-}
-
-h2 {
-  font-family: 'Space Mono', sans-serif;
-  font-size: 4.125em;
-  font-style: italic;
-  text-transform: uppercase;
-  line-height: 1em;
-}
-
-h3 {
-  font-family: 'Space Mono', sans-serif;
-  font-size: 1.125em;
-  text-transform: uppercase;
 }
 
 p {
@@ -119,6 +118,102 @@ a:hover, .droit-footer:hover {
   display: flex;
   gap: 85px;
 }
+
+.wpcf7-form-control {
+  height: 49px;
+  margin-bottom: 19px;
+}
+
+/* Modale de contact */
+.popup-overlay {
+  position: fixed; 
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  top: 0;
+  left: 0;
+}
+
+.popup-overlay.visible {
+  display: flex;
+}
+
+.popup-contact {
+  background: white;
+  width: 597px;
+  height: auto;
+  overflow: auto;
+  position: relative;
+  border: 5px solid #000;
+}
+
+.popup-header {
+  width: 100%;
+  overflow: hidden;   /* cache ce qui dépasse */
+}
+
+.popup-img {    /* image de la pop'up*/
+  width: 886px;
+  height: 106px;
+  margin: 18px -145px 46px -141px;
+}
+
+.popup-details {
+  width: 263px;   /*largueur case*/
+  margin: 0 auto;  /*permet de centrer */
+  object-fit: contain;
+}
+
+.wpcf7-text, .wpcf7-textarea {   /* style pour les bordure des cases, largueur*/
+  width: 100%;     /* permet taille égale des cases */
+  border-radius: 8px;
+  border: 1px solid #B8BBC2; /*bordure maquette */
+}
+
+.wpcf7-textarea {   /* style de la case message */
+  height: 149px;
+  margin-bottom: 19px;
+}
+
+.wpcf7-submit {   /*bouton envoyer */
+  width: 100%;
+  height: 50px;
+  border: transparent;
+  background: #D8D8D8;
+  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+}
+
+form label {   /* style du label family */
+  font-family: 'Poppins';
+  font-size: 0.75em;
+  font-weight: 500;
+  text-transform: uppercase;
+  gap: 4px;
+}
+
+/* Bouton de fermeture */
+.close-btn {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  color: #cf0e0e;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease; /* Transition douce */
+}
+
+.close-btn:hover {
+  color: #f52500; /* Changement de couleur au survol */
+  transform: scale(2.1); /* Agrandissement léger */
+  transition: transform 1.2s ease; /* Animation douce lors du zoom */
+}
+
 
 
 
