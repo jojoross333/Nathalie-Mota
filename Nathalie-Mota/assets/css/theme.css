@@ -1,7 +1,7 @@
 
-/*ETAPE 1 : STYLE POUR LE HEADER/FOOTER_______________________________________________________*/
+/*_________________________ETAPE 1 : STYLE POUR LE HEADER/FOOTER_____________________________________________________________*/
 
-/* ---Ajout des fonts de google font--- */
+/* ---_____________Ajout des fonts de google font__________--- */
 
 @font-face {
   font-family: 'Poppins';
@@ -13,14 +13,22 @@
 @font-face {
   font-family: 'Space Mono';
   font-style: normal;
-  font-weight: 700;
-  src: url('../fonts/Space_Mono/SpaceMono-italic.ttf') format('truetype');
+  font-weight: 400; /* Poids normal */
+  src: url('../fonts/Space_Mono/SpaceMono-Regular.ttf') format('truetype');
 }
 
-/* ---style header--- */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700; /* Poids gras */
+  src: url('../fonts/Space_Mono/SpaceMono-Bold.ttf') format('truetype');
+}
+
+/* ---____________HEADER STYLE___________________---- */
 
 header {
   width: 100%;
+  overflow-x: hidden; /* pas de débordement en responsive */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,64 +52,42 @@ header {
   gap: 50px;
 }
 
-/* ---size logo---*/
+/* ---______________LOGO SIZE__________________---*/
 
 .logo img {
   width: 216px;
 }
 
-/* permet de pousser le footer en bas et test hero apres le header*/
-
-/* Style global de la page */
-html, body {
-  height: 100%;  
-  margin: 0;
-}
-
-body {
-  display: flex;
-  flex-direction: column; /* Organise le contenu en une colonne */
-  justify-content: space-between; /* Pousse le footer vers le bas */
-}
-
-.hero {
-  margin-top: 80px;  
-  padding: 25px;
-  background-color: #e0e0fa; 
-}
-
-.hero-banner {
-  background-color: #f0f0f0;
-  padding: 20px;
-}
+/*---______Gestion de la police et position général des élements______---*/
 
 * {   /*   "*" permet la sélections de tout les élément de la page */
   margin: 0;
   padding: 0;
-  text-decoration: none;
-  box-sizing: border-box;
-  list-style: none;
+  text-decoration: none;     /* pas de texte surligné */
+  box-sizing: border-box;   /* deplace sur la droite dans sa box */
+  list-style: none;      /* eneleve le . lien */
 }
 
 p {
   font-family: 'Poppins', sans-serif;
   font-size: 0.875em;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 a, .droit-footer {
-  font-family: 'Space Mono', italic;
-  font-size: 1em;
-  text-transform: uppercase;   /*transforme le texte en majuscules */
+  font-family: 'Space Mono', sans-serif; /* Police Space Mono pour les liens */
+  font-size: 1.1em;
+  text-transform: uppercase;
   color: inherit;
-  font-weight: 400;
 }
 
 a:hover, .droit-footer:hover {
-  text-decoration: underline;
+  font-weight: bold; /* Passage au poids gras */
+  transform: translateY(-2px); /* Légère translation vers le haut */
+  transition: font-weight 0.3s ease, transform 0.3s ease; /* Transition fluide */
 }
 
-/* ---Footer--- */
+/* ---__________FOOTER__________--- */
 
 .menu-footer {
   display: flex;
@@ -119,17 +105,38 @@ a:hover, .droit-footer:hover {
   gap: 85px;
 }
 
-.wpcf7-form-control {
-  height: 49px;
-  margin-bottom: 19px;
+@media (max-width: 768px) {
+  .menu-footer {
+    flex-direction: column;  
+    align-items: center;  
+    gap: 20px;  
+    padding: 10px 20px;  
+    height: auto; 
+  }
+
+  .menu-footer ul {
+    flex-direction: column;  
+    gap: 15px;  
+    align-items: center;  /* Aligner les éléments du menu au centre */
+  }
+
+  .menu-footer ul li {
+    text-align: center;  /* Centrer le texte des items du menu */
+  }
+
+  .menu-footer ul li a {
+    text-align: center;  /* Assurez-vous que le texte des liens est centré */
+    display: inline-block;  /* Pour que text-align fonctionne */
+    padding: 5px 0;  /* Un peu de padding pour espacer les liens */
+  }
 }
 
-/* Modale de contact */
+/* ---___________________MODALE DE CONTACT________________________---- */
+
 .popup-overlay {
   position: fixed; 
   width: 100%;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.2);
   display: none;
   justify-content: center;
   align-items: center;
@@ -175,13 +182,13 @@ a:hover, .droit-footer:hover {
 }
 
 .wpcf7-textarea {   /* style de la case message */
-  height: 149px;
+  height: 149px !important;
   margin-bottom: 19px;
 }
 
 .wpcf7-submit {   /*bouton envoyer */
   width: 100%;
-  height: 50px;
+  height: 10px;
   border: transparent;
   background: #D8D8D8;
   box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
@@ -195,27 +202,125 @@ form label {   /* style du label family */
   gap: 4px;
 }
 
-/* Bouton de fermeture */
+.wpcf7-form-control {  /*modale hauteur*/
+  height: 49px;
+  margin-bottom: 19px;
+}
+
+/* ---__________________ STYLE Bouton de fermeture MODALE______________--- */
+
 .close-btn {
   position: absolute;
-  top: 30px;
-  right: 10px;
-  background: transparent;
-  border: none;
-  font-size: 30px;
-  color: #cf0e0e;
+  top: 10px; /* Ajustez la position en haut */
+  right: 10px; /* Ajustez la position à droite */
+  background: #b1adad; /* Fond blanc pour le cercle */
+  border: 2px solid #cf0e0e; /* Bordure rouge autour du cercle */
+  border-radius: 50%; /* Arrondi pour créer le cercle */
+  padding: 5px 10px; /* Un peu d'espace autour de la croix */
+  font-size: 30px; /* Taille de la croix */
+  color: #cf0e0e; /* Couleur de la croix */
   cursor: pointer;
-  transition: color 0.3s ease, transform 0.3s ease; /* Transition douce */
+  transition: color 0.3s ease, transform 0.3s ease, background 0.3s ease; /* Transition douce */
+
 }
 
+/* Effet au survol de la croix */
 .close-btn:hover {
-  color: #f52500; /* Changement de couleur au survol */
-  transform: scale(2.1); /* Agrandissement léger */
-  transition: transform 1.2s ease; /* Animation douce lors du zoom */
+  color: #f52500; /* Couleur plus foncée pour la croix */
+  background: #f3f3f3; /* Changement de fond au survol */
+  transform: scale(1.2); /* Légère agrandissement de la croix */
 }
 
+/*---________________MENU BURGER______________---*/
 
+.burger-menu {
+  display: none; /* Masqué par défaut */
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
 
+.burger-menu span {
+  width: 25px;
+  height: 3px;
+  background-color: #000;
+  border-radius: 5px;
+}
 
+/* ---______Responsive: Menu Burger et Menu en colonnes______--- */
 
+@media (max-width: 768px) {
+  header.active {
+    height: 150px; /* Augmenter la hauteur du header uniquement en mode responsive */
+  }
+
+  /* Menu burger */
+  .burger-menu {
+    display: flex;
+    position: absolute; /* Garder le burger en position fixe */
+    top: 20px; /* Ajuster selon la position souhaitée */
+    right: 20px; /* Ajuster la position du burger */
+  }
+
+  /* Logo */
+  .logo {
+    position: absolute;
+    left: 20px;  /* Garder le logo en position fixe à gauche */
+    top: 20px;   /* Ajuster la position du logo */
+  }
+
+  /* Menu déroulant */
+  .main-nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px; /* Positionner le menu juste en dessous du header */
+    right: 0;
+    background-color: #fff;
+    width: 100%;
+    padding: 20px;
+    border-top: 2px solid #000;
+  }
+
+  .main-nav.active ul {
+    display: flex; /* Afficher le menu déroulant lorsque la classe active est ajoutée */
+  }
+}
+
+/*---_____________PARTIE HERO PHOTO ALÉATOIRE/ H1 PHOTOGRAPGHE______________---*/
+
+.hero {
+  width: 100%;
+  height: 962px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 80px;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  color: transparent;
+  -webkit-text-stroke: 3px #ffffff;
+  z-index: 1;
+}
+
+h1 {
+  font-family: 'Space Mono', sans-serif;
+  font-size: 6em;
+  font-style: italic;
+  font-weight: 700;
+  text-transform: uppercase;
+}
 

@@ -8,7 +8,6 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
     <header>
         <div class="header_content">
             <div class="logo">
@@ -21,4 +20,11 @@
         <nav class="main-nav">
             <?php wp_nav_menu(array('theme_location' => 'header')); ?>
         </nav>
+
+        <div class="burger-menu" id="burger-menu">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </div>
     </header>
+       

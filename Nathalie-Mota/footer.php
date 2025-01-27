@@ -6,7 +6,7 @@
 <?php get_template_part('/templates/modale'); ?>
 
 <?php wp_footer(); ?>
-</body>
+
 </html>
 
 

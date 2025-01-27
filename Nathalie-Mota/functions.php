@@ -31,11 +31,12 @@ function create_post_type_photo() {
         )
     );
 }
+
 add_action('init', 'create_post_type_photo');
 
 function create_photo_taxonomy() {
     register_taxonomy(
-        'categorie_photo', // Ou vous pouvez garder 'categorie' si vous préférez
+        'categorie', // Ou vous pouvez garder 'categorie' si vous préférez
         'photo', // Post type auquel elle est associée
         array(
             'label' => __('Catégories de Photos'),

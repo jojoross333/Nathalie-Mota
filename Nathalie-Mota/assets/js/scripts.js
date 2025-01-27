@@ -1,5 +1,5 @@
 
-//code js pour la modale 
+//CODE JS DE LA MODALE 
 
 document.addEventListener("DOMContentLoaded", function() {
     // Sélectionner les éléments
@@ -25,5 +25,21 @@ document.addEventListener("DOMContentLoaded", function() {
         if (event.target === modale) {
             modale.classList.remove('visible'); // Fermer la modale
         }
+    });
+});
+
+// CODE POUR LE BURGER EN RESPONSIVE
+
+document.addEventListener("DOMContentLoaded", function() {
+    const burgerMenu = document.getElementById('burger-menu');  // Sélectionne le menu burger
+    const mainNav = document.querySelector('.main-nav');  // Sélectionne la barre de navigation
+    const header = document.querySelector('header');  // Sélectionne le header
+    const menuContent = document.querySelector('.menu-menu-header-container');  // Sélectionne la section de contenu
+    
+    // Ajouter un événement pour afficher/masquer le menu et agrandir le header
+    burgerMenu.addEventListener('click', function() {
+        mainNav.classList.toggle('active');  // Afficher/masquer le menu burger
+        header.classList.toggle('active');  // Agrandir le header lorsque le menu est ouvert
+        menuContent.classList.toggle('active');  // Agrandir ou afficher le contenu si nécessaire
     });
 });
