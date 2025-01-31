@@ -13,39 +13,22 @@
  */
 ?>
 
-<?php get_header(); ?>
+<?php get_header(); ?>   <!-- le header -->
 
-<?php get_template_part('/templates/hero'); ?>
+<?php get_template_part('/templates/hero'); ?>    <!-- l'entête hero image -->
 
+<section class="filtres_container">
+    <?php get_template_part('templates/filtres'); ?>   <!-- template des filtres -->
+</section>
 
-    <section class="photo-gallery">
-
-        <?php
-        // La requête pour obtenir les articles de type "photo"
-        $args = array(
-            'post_type' => 'photo', // Nom de votre CPT
-            'posts_per_page' => 8, // Nombre de posts à afficher
-        );
-        $photo_query = new WP_Query($args);
-
-        if ($photo_query->have_posts()) :
-            while ($photo_query->have_posts()) : $photo_query->the_post();
-                ?>
-                <div class="photo-item">
-                    <h3><?php the_title(); ?></h3>
-                    <?php if (has_post_thumbnail()) {
-                        the_post_thumbnail('medium'); // Affiche la miniature
-                    } ?>
-                    <a href="<?php the_permalink(); ?>">Voir la photo</a>
-                </div>
-                <?php
-            endwhile;
-            wp_reset_postdata(); // Réinitialiser les données de la requête
-        else :
-            echo '<p>Aucune photo trouvée.</p>';
-        endif;
-        ?>
-    </section>
+<section id="catalogueContainer">
+    <div id="photo-display">
+        <?php afficher_photos_catalogue(); // Affiche les photos par défaut ?>
+    </div>
+    <!-- Bouton Charger Plus -->
+    <div id="load-moreContainer"></div>
+    <button id="btnLoad-more">Charger Plus</button>
+</section>
 
 <?php get_footer(); ?>
 
