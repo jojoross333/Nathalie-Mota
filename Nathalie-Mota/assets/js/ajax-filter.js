@@ -23,7 +23,14 @@ jQuery(function($) {
             },
             success: function(response) {
                 $('#photo-display').html(response); // Remplace le contenu avec les photos filtrées
+                
+                // Réappliquer le style grid pour s'assurer que les photos sont bien affichées en grille
+                $('#photo-display').css('display', 'grid'); 
+                $('#photo-display').css('grid-template-columns', 'repeat(2, 1fr)'); // Assure que la grille reste en 2 colonnes
+                $('#photo-display').css('gap', '20px'); // Espace entre les photos
             }
         });
     });
 });
+
+

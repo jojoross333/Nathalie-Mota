@@ -2,7 +2,7 @@
 // Affichage des filtres pour les catégories et formats
 $taxonomy = [
     'categorie' => 'CATEGORIES',
-    'format' => 'Formats',
+    'format' => 'FORMATS',
 ];
 
 echo "<div class='taxo-gauche'>";

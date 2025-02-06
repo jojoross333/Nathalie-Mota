@@ -8,6 +8,7 @@
  */
 
 // Enqueue Scripts et Styles
+
 function nathalie_mota_scripts() {
     // Charger le CSS du thème
     wp_enqueue_style('nathalie-mota-style', get_template_directory_uri() . '/assets/css/theme.css', array(), 1.1);
@@ -22,6 +23,13 @@ function nathalie_mota_scripts() {
     wp_localize_script('load-more', 'MyAjax', array(
         'ajaxurl' => admin_url('admin-ajax.php')  // URL pour l'appel AJAX
     ));
+
+    // Ajouter Select2 via CDN
+    wp_enqueue_style('select2-style', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
+    wp_enqueue_script('select2-script', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '', true);
+
+    // Ajouter le fichier select2.js personnalisé
+    wp_enqueue_script('select2-custom', get_template_directory_uri() . '/assets/js/selec2.js', array('jquery', 'select2-script'), '', true);
 }
 add_action('wp_enqueue_scripts', 'nathalie_mota_scripts');
 
@@ -107,14 +115,20 @@ function filtrer_photos() {
     $args = array(
         'post_type' => 'photo',  // Le type de post
         'posts_per_page' => 8,   // Nombre de photos à afficher
-        'orderby' => 'date',     // Trier par date
+        'orderby' => 'date',     // Trier par date par défaut
         'order' => 'DESC',       // Par ordre décroissant
         'tax_query' => array(),  // Initialisation du tableau des filtres taxonomies
     );
 
+    // Vérifier si le filtre "Trier par" est passé dans les filtres
+    if (isset($filters['annee'])) {
+        // Si "annee" est défini, on applique le tri
+        $args['order'] = $filters['annee'];  // soit 'ASC' soit 'DESC'
+    }
+
     // Ajouter les filtres dynamiques (catégorie, format, année) dans la requête
     foreach ($filters as $taxonomy => $value) {
-        if (!empty($value)) {
+        if (!empty($value) && $taxonomy !== 'annee') {
             if ($taxonomy === 'annee') {
                 $args['year'] = $value; // Filtrer par année
             } else {
@@ -150,6 +164,7 @@ function filtrer_photos() {
 
     die(); // Terminer l'exécution après la réponse AJAX
 }
+
 
 //-------- Enqueue le script AJAX pour les filtres------------------
 

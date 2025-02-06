@@ -24,39 +24,6 @@
   src: url('../fonts/Space_Mono/SpaceMono-Bold.ttf') format('truetype');
 }
 
-/* ---____________HEADER STYLE___________________---- */
-
-header {
-  width: 100%;
-  overflow-x: hidden; /* pas de débordement en responsive */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  position: fixed;
-  box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03); 
-  z-index: 2;
-  height: 80px;
-  padding: 0 146px;
-}
-
-.main-nav {
-  display: flex;
-}
-
-.main-nav ul {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 50px;
-}
-
-/* ---______________LOGO SIZE__________________---*/
-
-.logo img {
-  width: 216px;
-}
-
 /*---______Gestion de la police et position général des élements______---*/
 
 * {   /*   "*" permet la sélections de tout les élément de la page */
@@ -84,6 +51,120 @@ a:hover, .droit-footer:hover {
   font-weight: bold; /* Passage au poids gras */
   transform: translateY(-2px); /* Légère translation vers le haut */
   transition: font-weight 0.3s ease, transform 0.3s ease; /* Transition fluide */
+}
+
+/* ---____________HEADER STYLE / BURGER RESPONSIVE___________________---- */
+
+header {
+  width: 100%;
+  overflow-x: hidden; /* pas de débordement en responsive */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  position: fixed;
+  box-shadow: 0px 4px 14px 10px rgba(0, 0, 0, 0.03); 
+  z-index: 2;
+  height: 80px;
+  padding: 0 146px;
+}
+
+.main-nav {
+  display: flex;
+}
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 50px;
+}
+
+.logo img {
+  width: 216px;
+}
+
+.burger-menu {
+  display: none; /* Masqué par défaut */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.burger-menu span {
+  display: block;
+  height: 4px;
+  background-color: #000000;
+  border-radius: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.burger-menu.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger-menu.active span:nth-child(2) {
+  opacity: 0;  /* Cache la deuxième ligne */
+}
+
+.burger-menu.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media (max-width: 768px) {
+  /* Burger Menu Position */
+  .burger-menu {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    gap: 6px;
+  }
+
+  /* Le menu qui occupe toute la hauteur */
+  .main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #d93a35; /* Couleur du menu comme la maquette */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  /* Affichage du menu quand la classe active est ajoutée */
+  .main-nav.active {
+    transform: translateY(0);
+  }
+
+  .main-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    text-align: center;
+    padding: 0;
+  }
+
+  .main-nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .main-nav ul li a:hover {
+    color: #e0e0e0; /* Légère modification de la couleur au survol */
+  }
 }
 
 /* ---__________FOOTER__________--- */
@@ -206,61 +287,6 @@ form label {   /* style du label family */
   margin-bottom: 19px;
 }
 
-/*---________________MENU BURGER______________---*/
-
-.burger-menu {
-  display: none; /* Masqué par défaut */
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
-}
-
-.burger-menu span {
-  width: 25px;
-  height: 3px;
-  background-color: #000;
-  border-radius: 5px;
-}
-
-/* ---______Responsive: Menu Burger et Menu en colonnes______--- */
-
-@media (max-width: 768px) {
-  header.active {
-    height: 150px; /* Augmenter la hauteur du header uniquement en mode responsive */
-  }
-
-  /* Menu burger */
-  .burger-menu {
-    display: flex;
-    position: absolute; /* Garder le burger en position fixe */
-    top: 20px; /* Ajuster selon la position souhaitée */
-    right: 20px; /* Ajuster la position du burger */
-  }
-
-  /* Logo */
-  .logo {
-    position: absolute;
-    left: 20px;  /* Garder le logo en position fixe à gauche */
-    top: 20px;   /* Ajuster la position du logo */
-  }
-
-  /* Menu déroulant */
-  .main-nav ul {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 80px; /* Positionner le menu juste en dessous du header */
-    right: 0;
-    background-color: #fff;
-    width: 100%;
-    padding: 20px;
-    border-top: 2px solid #000;
-  }
-
-  .main-nav.active ul {
-    display: flex; /* Afficher le menu déroulant lorsque la classe active est ajoutée */
-  }
-}
 
 /*---_____________PARTIE HERO PHOTO ALÉATOIRE/ H1 PHOTOGRAPGHE______________---*/
 
@@ -272,21 +298,6 @@ form label {   /* style du label family */
   justify-content: center;
   position: relative;
   margin-bottom: 79px;
-
-  @media all and (max-width: 479px) {
-    height: 250px;
-    margin-bottom: 26px;
-  }
-
-  @media all and (min-width: 480px) and (max-width: 768px) {
-    height: 500px;
-    margin-bottom: 50px;
-  }
-
-  @media all and (min-width: 480px) and (max-width: 768px) {
-    height: 500px;
-    margin-bottom: 50px;
-  }
 }
 .hero img {
   width: 100%;
@@ -313,25 +324,34 @@ h1 {
   text-transform: uppercase;
 }
 
+@media all and (max-width: 479px) {
+  .hero {
+    height: 250px;  /* Réduit la hauteur du Hero sur petits écrans */
+    margin-bottom: 26px;  /* Réduit la marge inférieure */
+  }
+}
 
-/* ---_____________FILTRES____________--- */
+/* Pour les écrans entre 480px et 768px */
+@media all and (min-width: 480px) and (max-width: 768px) {
+  .hero {
+    height: 500px;  /* Hauteur du Hero ajustée pour les écrans moyens */
+    margin-bottom: 50px;  /* Augmente la marge inférieure */
+  }
+}
+
+
+/* ---___________________________-FILTRES________________________--- */
+
 
 .filtres_container {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  width: 80%;
+  width: 77%;
 }
 
 .custom-select {
   width: 260px;
-  height: 43px;
-  border: 1.3px solid rgba(184, 187, 194, 1);
-  border-radius: 8px;
-  background: #fff;
-  padding: 11px 18px;
-  display: flex;
-  align-items: center;
 }
 
 .taxo-gauche {
@@ -343,12 +363,200 @@ h1 {
   align-items: flex-end;
 }
 
+/*--- personnalisation via select2---*/
+
+.select2-selection__arrow { /* la fleche du filtre */
+  top: 8px !important;
+  left: 220px !important;
+}
+
+/*---partie span de texte--*/
+
+.select2-selection--single {
+  display: flex !important;
+  align-items: center !important;
+  padding: 12px 18px !important;
+  height: 43px !important;
+  border: 1.3px solid rgba(184, 187, 194, 1) !important;
+  border-radius: 8px !important;
+}
+
+.select2-dropdown .select2-search--dropdown .select2-search__field { /*case recheche supprimer */
+  display: none;
+}
+
+/* Styles des texte filtre container  */
+.select2-container--default {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.75em !important;
+}
+
+/* Styles par défaut pour les options survolées dans le menu déroulant */
+.select2-results__option--highlighted {
+  background-color: #E00000 !important;
+  color: #fff !important;
+}
 
 
+/* ---_______PHOTO CATALOGUE / BOUTON CHARGER ---_______________ */
 
 
+#catalogueContainer {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#load-moreContainer  {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 12px 0;
+}
+
+#btnLoad-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 272px;
+  height: 50px;
+  border: transparent;
+  border-radius: 2px;
+  background: #D8D8D8;
+  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+  font-family: 'Space Mono', sans-serif;
+  font-size: 0.75em;
+  color: #000;
+  margin: 0 auto 30px auto;
+}
+
+#btnLoad-more:hover {
+  background: #292727;  
+  color: white;         
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;      
+  transform: scale(1.05); 
+  transition: all 0.3s ease-in-out; 
+}
+
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 photos par ligne */
+  gap: 20px;  
+}
+
+#photo-display {
+  padding: 20px;
+}
+
+.photo-item {
+  position: relative;
+  width: 100%;  
+  height: 50vh; 
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
 
 
+/*---_______________PAGE-PHOTO (SINGLE-PHOTO.PHP)____________________---*/
 
+
+/*---bloc de la photo---*/
+
+.page-photo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.photo-content {
+  display: flex;
+  flex-direction: row-reverse; /* déplace le bloc image a droite */
+  width: 80%;
+  margin: auto;
+}
+
+.bloc-photo img {  /*taille selon maquette */
+  width: 563px;
+  height: 844px;
+  object-fit: cover;
+}
+
+/*---bloc des références---*/
+
+h2 {
+  font-family: 'Space Mono', sans-serif;
+  font-size: 4.125em;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 1em;
+}
+
+.infos-bloc {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+  width: 564px;
+  margin-right: 20px;
+  gap: 20px;
+  text-align: left;
+  border-bottom: 1px solid #000;
+  padding-bottom: 35px;
+}
+
+.txt-infos {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  text-align: left;
+  font-family: 'Space Mono', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.875em;
+}
+
+/* ---Bloc contact content--- */
+
+.contact-content {
+  width: 80%;
+  height: 118px;
+  margin: 0 auto;
+  display: flex;
+  align-content: center;
+  border-bottom: 1px solid black;
+}
+
+.contact-ref {
+  display: flex;
+  align-items: center;
+}
+
+.interesse {
+  margin-right: 95px;
+}
+
+#contact-btn {
+  width: 272px;
+  height: 50px;
+  border-radius: 2px;
+  background: #D8D8D8;
+  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+  border: transparent;
+  font-family: 'Space Mono', sans-serif;
+  font-size: 0.75em;
+  color: #000;
+}
+
+#contact-btn:hover {
+  background: #484545;
+  color: #fff;
+}
 
 
