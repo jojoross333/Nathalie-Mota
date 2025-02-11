@@ -1,48 +1,46 @@
 jQuery(document).ready(function($) {
-    // Lorsque l'utilisateur clique sur "Charger plus"
     $('#btnLoad-more').on('click', function() {
-        load_more_photos();
+        load_more_photos(); // Ta fonction pour charger plus de photos
     });
 
-    // Fonction pour charger plus de photos via AJAX
     function load_more_photos() {
-        const category = $('#categorie').val();  // Récupère la catégorie sélectionnée
-        const format = $('#format').val();       // Récupère le format sélectionné
-        const year = $('#annee').val();          // Récupère l'année sélectionnée
+        const category = $('#categorie').val();
+        const format = $('#format').val();
+        const year = $('#annee').val();
 
-        // Récupère les IDs des photos déjà affichées (y compris les nouvelles photos chargées)
+        // Récupérer les IDs des photos déjà affichées (pour éviter les doublons)
         const photoIds = [];
         $('.photo-item').each(function() {
-            const photoId = $(this).data('photo-id');  // Récupère l'ID de chaque photo
+            const photoId = $(this).data('photo-id');
             if(photoId) {
-                photoIds.push(photoId);  // Ajoute cet ID au tableau photoIds
+                photoIds.push(photoId);
             }
         });
 
-        console.log(photoIds);  // Affiche les IDs des photos déjà présentes dans la console
-
         $.ajax({
-            url: MyAjax.ajaxurl,  // URL d'AJAX
+            url: MyAjax.ajaxurl,
             type: 'POST',
             data: {
-                action: 'load_more_photos',  // Action côté PHP
-                photoArray: photoIds,  // Liste des photos déjà affichées pour éviter les doublons
+                action: 'load_more_photos',
+                photoArray: photoIds,
                 category: category,
-                year: year,
-                format: format
+                format: format,
+                year: year
             },
             success: function(response) {
                 if (response) {
-                    // Ajoute les nouvelles photos au container
-                    $('#photo-display').append(response);
+                    $('#photo-display').append(response); // Ajouter les nouvelles photos
+                    // Forcer le recalcul de la mise en page grid après ajout
+                    $('#photo-display').css('display', 'grid');
+                    $('#photo-display').trigger('resize'); // Recalcule la disposition
                 } else {
-                    // Si aucune photo n'est trouvée, masque le bouton
-                    $('#btnLoad-more').hide();
+                    $('#btnLoad-more').hide(); // Cacher le bouton si aucune photo n'est trouvée
                 }
             },
             error: function(error) {
-                console.log('Error:', error);
+                console.log('Erreur AJAX : ', error);
             }
         });
     }
 });
+

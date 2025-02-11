@@ -18,6 +18,7 @@ function nathalie_mota_scripts() {
 
     // Charger le script pour le bouton "Charger plus" (load-more.js)
     wp_enqueue_script('load-more', get_template_directory_uri() . '/assets/js/load-more.js', array('jquery'), null, true);
+    
 
     // Localiser le script pour passer l'URL d'AJAX à JavaScript
     wp_localize_script('load-more', 'MyAjax', array(
@@ -73,9 +74,12 @@ add_action('init', 'create_photo_taxonomy');
 // Fonction pour afficher les photos dans la galerie (front-page.php)-----------------------
 
 function afficher_photos_catalogue($args = array()) {
+    // Récupérer la page actuelle pour la pagination
+
+    // Définir les arguments de la requête
     $default_args = array(
-        'post_type' => 'photo',
-        'posts_per_page' => 8,   // Nombre de photos à afficher par défaut
+        'post_type' => 'photo',         // CPT 'photo'
+        'posts_per_page' => 8,          // Nombre de photos par page
     );
     $args = array_merge($default_args, $args);  // Fusionner les arguments si des filtres sont passés
 
@@ -83,24 +87,27 @@ function afficher_photos_catalogue($args = array()) {
     $photo_query = new WP_Query($args);
 
     if ($photo_query->have_posts()) :
-        echo '<div class="photo-gallery">';
+        echo '<div class="photo-display">';  // Utiliser 'photo-display' ici pour la cohérence
         while ($photo_query->have_posts()) : $photo_query->the_post();
             ?>
-            <div class="photo-item">
+            <div class="photo-item" data-photo-id="<?php the_ID(); ?>"> <!-- ID de la photo -->
                 <a href="<?php the_permalink(); ?>">
                     <?php if (has_post_thumbnail()) {
-                        the_post_thumbnail('medium'); // Affiche la miniature de la photo
+                        the_post_thumbnail('full'); // Affiche la miniature de la photo
                     } ?>
                 </a>
             </div>
             <?php
         endwhile;
         echo '</div>';
-        wp_reset_postdata();  // Réinitialiser les données de la requête
     else :
         echo '<p>Aucune photo trouvée.</p>';
     endif;
+
+    wp_reset_postdata();  // Réinitialiser les données de la requête
 }
+
+
 
 // -------Action AJAX pour filtrer les photos----------------------------------------
 
@@ -146,24 +153,27 @@ function filtrer_photos() {
     $query = new WP_Query($args);
 
     if ($query->have_posts()) :
+        echo '<div class="photo-display">';  // Ajout de la div "photo-display"
         while ($query->have_posts()) : $query->the_post();
             ?>
-            <div class="photo-item">
+            <div class="photo-item" data-photo-id="<?php the_ID(); ?>"> <!-- ID de la photo -->
                 <a href="<?php the_permalink(); ?>">
                     <?php if (has_post_thumbnail()) {
-                        the_post_thumbnail('medium');
+                        the_post_thumbnail('full'); // Affiche la miniature de la photo
                     } ?>
                 </a>
             </div>
             <?php
         endwhile;
-        wp_reset_postdata();
+        echo '</div>';  // Fermeture de la div .photo-display
     else :
         echo '<p>Aucune photo trouvée.</p>';
     endif;
 
     die(); // Terminer l'exécution après la réponse AJAX
 }
+
+
 
 
 //-------- Enqueue le script AJAX pour les filtres------------------
@@ -180,10 +190,12 @@ function enqueue_ajax_filter_script() {
 }
 
 
-// ------------Action AJAX pour charger plus de photos---------------
+// ------------Action AJAX pour charger plus de photos---------------__________________________________
 
 add_action('wp_ajax_load_more_photos', 'load_more_photos');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
+
+
 
 function load_more_photos() {
     // Récupérer les paramètres passés par AJAX
@@ -233,14 +245,27 @@ function load_more_photos() {
     $query = new WP_Query($args);
 
     if ($query->have_posts()) :
-        // Inclure le fichier 'load.php' pour chaque photo
+        // Afficher la nouvelle div contenant les photos
+        echo '<div class="photo-display">';  // Ajoute cette div pour englober toutes les photos
         while ($query->have_posts()) : $query->the_post();
-            get_template_part('templates/load');  // Charger le bloc photo
+            ?>
+            <div class="photo-item" data-photo-id="<?php the_ID(); ?>">
+                <a href="<?php the_permalink(); ?>">
+                    <?php if (has_post_thumbnail()) {
+                        the_post_thumbnail('full');
+                    } ?>
+                </a>
+            </div>
+            <?php
         endwhile;
-        wp_reset_postdata();
+        echo '</div>';  // Fermeture de la div .photo-display
     else :
         echo 'Aucune photo trouvée.';
     endif;
 
     die(); // Terminer l'exécution après la réponse AJAX
+    wp_reset_postdata();
 }
+
+
+

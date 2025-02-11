@@ -66,3 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
+  // supprime le body de base wp
+  
+  document.addEventListener("DOMContentLoaded", function() {
+    // Supprimer la classe 'customize-support' du body si elle est présente
+    document.body.classList.remove('customize-support');
+});
+
+
+

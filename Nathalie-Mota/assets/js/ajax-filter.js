@@ -13,6 +13,15 @@ jQuery(function($) {
             }
         });
 
+        // Récupérer les IDs des photos déjà affichées (pour éviter la duplication)
+        var photoIds = [];
+        $('.photo-item').each(function() {
+            var photoId = $(this).data('photo-id');
+            if (photoId) {
+                photoIds.push(photoId);  // Ajoute cet ID au tableau photoIds
+            }
+        });
+
         // Effectuer la requête AJAX
         $.ajax({
             url: ajax_filter_obj.ajaxurl,
@@ -20,14 +29,11 @@ jQuery(function($) {
             data: {
                 action: 'filtrer_photos', // Action côté PHP
                 filters: filters, // Objet contenant tous les filtres
+                photoArray: photoIds  // Liste des photos déjà affichées
             },
             success: function(response) {
                 $('#photo-display').html(response); // Remplace le contenu avec les photos filtrées
-                
-                // Réappliquer le style grid pour s'assurer que les photos sont bien affichées en grille
-                $('#photo-display').css('display', 'grid'); 
-                $('#photo-display').css('grid-template-columns', 'repeat(2, 1fr)'); // Assure que la grille reste en 2 colonnes
-                $('#photo-display').css('gap', '20px'); // Espace entre les photos
+        
             }
         });
     });
