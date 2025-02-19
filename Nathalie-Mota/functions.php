@@ -11,14 +11,13 @@
 
 function nathalie_mota_scripts() {
     // Charger le CSS du thème
-    wp_enqueue_style('nathalie-mota-style', get_template_directory_uri() . '/assets/css/theme.css', array(), 1.1);
-    
+    wp_enqueue_style('nathalie-mota-style', get_template_directory_uri() . '/assets/css/theme.css', array(), '1.1');
+
     // Charger le script JavaScript modale
-    wp_enqueue_script('modale', get_template_directory_uri() . '/assets/js/scripts.js', array(), null, true);
+    wp_enqueue_script('modale', get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), null, true);
 
     // Charger le script pour le bouton "Charger plus" (load-more.js)
     wp_enqueue_script('load-more', get_template_directory_uri() . '/assets/js/load-more.js', array('jquery'), null, true);
-    
 
     // Localiser le script pour passer l'URL d'AJAX à JavaScript
     wp_localize_script('load-more', 'MyAjax', array(
@@ -27,12 +26,17 @@ function nathalie_mota_scripts() {
 
     // Ajouter Select2 via CDN
     wp_enqueue_style('select2-style', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
-    wp_enqueue_script('select2-script', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '', true);
+    wp_enqueue_script('select2-script', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), null, true);
 
     // Ajouter le fichier select2.js personnalisé
-    wp_enqueue_script('select2-custom', get_template_directory_uri() . '/assets/js/selec2.js', array('jquery', 'select2-script'), '', true);
+    wp_enqueue_script('select2-custom', get_template_directory_uri() . '/assets/js/selec2.js', array('jquery', 'select2-script'), null, true);
+
+    // Enqueue le script de la lightbox
+    wp_enqueue_script('lightbox', get_template_directory_uri() . '/assets/js/lightbox.js', array('jquery'), null, true);
+
 }
 add_action('wp_enqueue_scripts', 'nathalie_mota_scripts');
+
 
 // -------------------Création du Custom Post Type "photo"-----------
 
@@ -74,8 +78,6 @@ add_action('init', 'create_photo_taxonomy');
 // Fonction pour afficher les photos dans la galerie (front-page.php)-----------------------
 
 function afficher_photos_catalogue($args = array()) {
-    // Récupérer la page actuelle pour la pagination
-
     // Définir les arguments de la requête
     $default_args = array(
         'post_type' => 'photo',         // CPT 'photo'
@@ -89,15 +91,10 @@ function afficher_photos_catalogue($args = array()) {
     if ($photo_query->have_posts()) :
         echo '<div class="photo-display">';  // Utiliser 'photo-display' ici pour la cohérence
         while ($photo_query->have_posts()) : $photo_query->the_post();
-            ?>
-            <div class="photo-item" data-photo-id="<?php the_ID(); ?>"> <!-- ID de la photo -->
-                <a href="<?php the_permalink(); ?>">
-                    <?php if (has_post_thumbnail()) {
-                        the_post_thumbnail('full'); // Affiche la miniature de la photo
-                    } ?>
-                </a>
-            </div>
-            <?php
+
+            // Inclure le fichier load.php pour afficher chaque photo
+            include(get_template_directory() . '/templates/load.php'); 
+
         endwhile;
         echo '</div>';
     else :
@@ -106,7 +103,6 @@ function afficher_photos_catalogue($args = array()) {
 
     wp_reset_postdata();  // Réinitialiser les données de la requête
 }
-
 
 
 // -------Action AJAX pour filtrer les photos----------------------------------------

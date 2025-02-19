@@ -69,10 +69,6 @@ header {
   padding: 0 146px;
 }
 
-.main {
-  display: flex !important;
-}
-
 .main-nav {
   display: flex;
 }
@@ -99,14 +95,14 @@ header {
 
 .burger-menu span {
   display: block;
-  height: 4px;
+  height: 2px;
   background-color: #000000;
   border-radius: 5px;
   transition: transform 0.3s ease-in-out;
 }
 
 .burger-menu.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: rotate(45deg) translate(6px, 6px);
 }
 
 .burger-menu.active span:nth-child(2) {
@@ -114,7 +110,7 @@ header {
 }
 
 .burger-menu.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
 @media (max-width: 768px) {
@@ -122,9 +118,13 @@ header {
   .burger-menu {
     display: flex;
     position: absolute;
-    top: 20px;
+    top: 30px;
     right: 20px;
     gap: 6px;
+  }
+
+  header {
+    padding: 0 20px;
   }
 
   /* Le menu qui occupe toute la hauteur */
@@ -160,6 +160,8 @@ header {
   .main-nav ul li a {
     color: white;
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -331,7 +333,11 @@ h1 {
 @media all and (max-width: 479px) {
   .hero {
     height: 250px;  /* Réduit la hauteur du Hero sur petits écrans */
-    margin-bottom: 26px;  /* Réduit la marge inférieure */
+    margin-bottom: 25px;  /* Réduit la marge inférieure */
+  }
+
+  h1 {
+    font-size: 2.5em;  /* Réduit la taille du texte h1 sur les petits écrans */
   }
 }
 
@@ -339,7 +345,11 @@ h1 {
 @media all and (min-width: 480px) and (max-width: 768px) {
   .hero {
     height: 500px;  /* Hauteur du Hero ajustée pour les écrans moyens */
-    margin-bottom: 50px;  /* Augmente la marge inférieure */
+    margin-bottom: 20px;  
+  }
+
+  h1 {
+    font-size: 4em;  
   }
 }
 
@@ -349,23 +359,53 @@ h1 {
 
 .filtres_container {
   display: flex;
+  max-width: 100%;
+  width: 100%;
   justify-content: space-between;
   margin: 0 auto;
-  width: 77%;
 }
 
 .custom-select {
   width: 260px;
+  z-index: 11;
 }
 
 .taxo-gauche {
   display: flex;
+  margin-left: 160px;
   gap: 36px;
 }
 
 .taxo-droite {
-  align-items: flex-end;
+  align-items: flex;
+  margin-right: 160px;
 }
+
+@media (max-width: 768px) {
+  .filtres_container {
+    flex-direction: column; /* Change la disposition en colonne sur mobile */
+    align-items: center; /* Centre les éléments */
+    justify-content: center;
+  }
+  
+  .taxo-gauche {
+    display: flex;
+    align-items: center;
+    flex-direction: column; /* Place les éléments en colonne */
+    gap: 20px; /* Réduit l'espacement */
+    margin-right: 165px;
+  }
+
+  .taxo-droite {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les éléments */
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 155px;
+  }
+}
+
 
 /*--- personnalisation via select2---*/
 
@@ -465,6 +505,16 @@ h1 {
   object-fit: cover; 
 }
 
+@media (max-width: 768px) {
+  .photo-display {
+    grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    gap: 20px; /* Un peu plus d'espace entre les images */
+  }
+
+  .photo-item {
+    height: 250px; /* Ajuste la hauteur des images pour les petits écrans */
+  }
+}
 
 /*---_______________PAGE-PHOTO (SINGLE-PHOTO.PHP)____________________---*/
 
@@ -489,6 +539,7 @@ h1 {
   height: 844px;
   object-fit: cover;
 }
+
 
 /*---bloc des références---*/
 
@@ -527,7 +578,7 @@ h2 {
 
 .contact-content {
   width: 80%;
-  height: 118px;
+  height: 120px;
   margin: 0 auto;
   display: flex;
   align-content: center;
@@ -591,3 +642,217 @@ h2 {
   height: 495px;
   object-fit: cover;
 }
+
+/* _____-----media querie page single-photo.php_____----- */
+
+@media (max-width: 768px) {
+  .bloc-photo img {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 40px;
+    width: 265px;
+    height: 397px;
+  }
+
+  .photo-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .infos-bloc {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .title-infos {
+    font-size: 2.5em;
+  }
+
+  .contact-ref {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  h3 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Space Mono';
+  }
+
+  .contact-content {
+    display: flex;
+    justify-content: center;
+  }
+ 
+  .related-photos-list { /*photo apprenté en columm */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .related-photo-item {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .related-photo-item img {
+    width: 317px !important;
+    height: 278px !important;
+  }
+}
+
+
+/*________________________LIGHTBOX_________________________________________--*/
+
+/*-------- css pour le survol des photos---------*/
+
+.eye {
+  width: 46px;
+  height: 31.2px;    
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  cursor: pointer;
+}
+
+.photo-overlay h2, .photo-overlay h3 {
+  position: absolute;
+  color: #fff;
+  font-family: 'poppons', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.87em;
+  font-weight: 500;
+}
+
+.photo-overlay h2 {
+  left: 17px;
+  bottom: 12px;
+  font-style: normal;
+}
+
+.photo-overlay h3 {
+  right: 23px;
+  bottom: 12px;
+}
+
+.full-screen {
+  position: absolute;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  top: 5%;
+  right: 5%;
+}
+
+/* L'overlay qui apparaît au survol */
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Fond noir transparent */
+  transition: opacity 0.3s ease;
+  display: none;
+}
+
+/* Lors du survol de la photo, on affiche l'overlay */
+.photo-item:hover .photo-overlay {
+  display: flex;
+  pointer-events: auto; /* Permet d'interagir avec l'overlay pendant le survol */
+  opacity: 1; /* Assure que l'overlay est visible */
+}
+
+
+/*_________lightbox overlay___________*/
+
+
+
+/* Lightbox Overlay */
+.lightbox-overlay {
+  display: none; /* Cacher la lightbox par défaut */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Fond noir transparent */
+  z-index: 1000; /* Au-dessus de tout le contenu */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Contenu de la lightbox */
+.lightbox-content {
+  margin-top: 150px;
+  position: relative;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Image dans la lightbox */
+.lightbox-photo img {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+}
+
+/* Bouton de fermeture */
+.closeLightbox {
+  position: absolute;
+  top: -10px;
+  right: 65px;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+/* Flèches de navigation */
+
+.lightbox-navigation {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  transform: translateY(-50%);
+}
+
+.lightboxPrevious, .lightboxNext {
+  cursor: pointer;
+}
+
+.lightboxPrevious img, .lightboxNext img {
+  max-width: 150px;
+  max-height: 150px;
+  filter: invert(1); /* Inverse les couleurs pour avoir les flèches en blanc */
+}
+
+.lightboxPrevious:hover img, .lightboxNext:hover img {
+  opacity: 0.7;  /* Légère transparence lors du survol */
+}
+
+.lightbox-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  margin-top: 20px;
+}
+
+.lightbox-info__reference, .lightbox-info__category {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+
+
+

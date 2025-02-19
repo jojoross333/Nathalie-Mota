@@ -75,7 +75,7 @@ $formats = get_the_terms( $post->ID, 'format' );
                     <div class="related-photo-item">
                         <a href="<?php the_permalink(); ?>">
                             <?php if (has_post_thumbnail()) { 
-                                the_post_thumbnail('medium');
+                                the_post_thumbnail('full');
                             } ?>
                         </a>
                     </div>
