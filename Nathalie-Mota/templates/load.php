@@ -1,15 +1,10 @@
-
-
-<!-- Fichier: templates/load.php -->
-
-
 <div class="photo-item" data-photo-id="<?php the_ID(); ?>"> <!-- ID de la photo -->
     <a href="<?php the_permalink(); ?>" class="open-single-photo"> <!-- Lien vers la page single-photo -->
         <?php if (has_post_thumbnail()) { 
             the_post_thumbnail('full'); // Affiche la miniature de la photo
         } ?>
     </a>
-    
+
     <!-- Overlay qui apparaît au survol -->
     <div class="photo-overlay">
         <h2><?php echo get_field('reference'); ?></h2> <!-- Référence de la photo -->

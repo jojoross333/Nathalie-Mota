@@ -2,21 +2,32 @@ jQuery(document).ready(function($) {
     // Cacher la lightbox au départ
     $('#lightbox-overlay').hide();
 
-    // Ouvrir la lightbox au clic sur le plein écran
-    $('.full-screen').on('click', function(e) {
-        e.preventDefault();
+    // Fonction pour activer la lightbox pour chaque photo
+    function activateLightbox() {
+        // Ouvrir la lightbox au clic sur le plein écran
+        $('.full-screen').on('click', function(e) {
+            e.preventDefault();
 
-        const imageSrc = $(this).data('image');
-        const reference = $(this).data('reference');
-        const category = $(this).data('category');
+            const imageSrc = $(this).data('image');
+            const reference = $(this).data('reference');
+            const category = $(this).data('category');
 
-        // Mettre à jour le contenu de la lightbox
-        $('#lightbox-image').attr('src', imageSrc);
-        $('#photo-reference').text('Référence : ' + reference);
-        $('#photo-category').text('Catégorie : ' + category);
+            // Mettre à jour le contenu de la lightbox
+            $('#lightbox-image').attr('src', imageSrc);
+            $('#photo-reference').text('Référence : ' + reference);
+            $('#photo-category').text('Catégorie : ' + category);
 
-        // Afficher la lightbox
-        $('#lightbox-overlay').fadeIn();
+            // Afficher la lightbox
+            $('#lightbox-overlay').fadeIn();
+        });
+    }
+
+    // Initialiser la lightbox pour les éléments existants
+    activateLightbox();
+
+    // Lorsque de nouvelles photos sont chargées via AJAX, réappliquer la lightbox
+    $(document).ajaxComplete(function() {
+        activateLightbox(); // Réactive la lightbox sur les nouvelles photos ajoutées via AJAX
     });
 
     // Fermer la lightbox

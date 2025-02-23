@@ -18,7 +18,7 @@ function nathalie_mota_scripts() {
 
     // Charger le script pour le bouton "Charger plus" (load-more.js)
     wp_enqueue_script('load-more', get_template_directory_uri() . '/assets/js/load-more.js', array('jquery'), null, true);
-
+    
     // Localiser le script pour passer l'URL d'AJAX à JavaScript
     wp_localize_script('load-more', 'MyAjax', array(
         'ajaxurl' => admin_url('admin-ajax.php')  // URL pour l'appel AJAX
@@ -107,8 +107,9 @@ function afficher_photos_catalogue($args = array()) {
 
 // -------Action AJAX pour filtrer les photos----------------------------------------
 
-add_action('wp_ajax_filtrer_photos', 'filtrer_photos');  // Pour les utilisateurs connectés
-add_action('wp_ajax_nopriv_filtrer_photos', 'filtrer_photos');  // Pour les utilisateurs non connectés
+// ------ Action AJAX pour filtrer les photos -------
+add_action('wp_ajax_filtrer_photos', 'filtrer_photos');
+add_action('wp_ajax_nopriv_filtrer_photos', 'filtrer_photos');
 
 function filtrer_photos() {
     // Récupérer les filtres envoyés via AJAX
@@ -125,7 +126,6 @@ function filtrer_photos() {
 
     // Vérifier si le filtre "Trier par" est passé dans les filtres
     if (isset($filters['annee'])) {
-        // Si "annee" est défini, on applique le tri
         $args['order'] = $filters['annee'];  // soit 'ASC' soit 'DESC'
     }
 
@@ -151,25 +151,16 @@ function filtrer_photos() {
     if ($query->have_posts()) :
         echo '<div class="photo-display">';  // Ajout de la div "photo-display"
         while ($query->have_posts()) : $query->the_post();
-            ?>
-            <div class="photo-item" data-photo-id="<?php the_ID(); ?>"> <!-- ID de la photo -->
-                <a href="<?php the_permalink(); ?>">
-                    <?php if (has_post_thumbnail()) {
-                        the_post_thumbnail('full'); // Affiche la miniature de la photo
-                    } ?>
-                </a>
-            </div>
-            <?php
+            // Inclure le fichier load.php pour afficher chaque photo
+            include(get_template_directory() . '/templates/load.php');
         endwhile;
-        echo '</div>';  // Fermeture de la div .photo-display
+        echo '</div>';
     else :
         echo '<p>Aucune photo trouvée.</p>';
     endif;
 
-    die(); // Terminer l'exécution après la réponse AJAX
+    die();  // Terminer l'exécution après la réponse AJAX
 }
-
-
 
 
 //-------- Enqueue le script AJAX pour les filtres------------------
@@ -188,10 +179,9 @@ function enqueue_ajax_filter_script() {
 
 // ------------Action AJAX pour charger plus de photos---------------__________________________________
 
+// ------- Action AJAX pour charger plus de photos -------
 add_action('wp_ajax_load_more_photos', 'load_more_photos');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
-
-
 
 function load_more_photos() {
     // Récupérer les paramètres passés par AJAX
@@ -244,15 +234,8 @@ function load_more_photos() {
         // Afficher la nouvelle div contenant les photos
         echo '<div class="photo-display">';  // Ajoute cette div pour englober toutes les photos
         while ($query->have_posts()) : $query->the_post();
-            ?>
-            <div class="photo-item" data-photo-id="<?php the_ID(); ?>">
-                <a href="<?php the_permalink(); ?>">
-                    <?php if (has_post_thumbnail()) {
-                        the_post_thumbnail('full');
-                    } ?>
-                </a>
-            </div>
-            <?php
+            // Inclure le fichier load.php pour afficher chaque photo
+            include(get_template_directory() . '/templates/load.php');
         endwhile;
         echo '</div>';  // Fermeture de la div .photo-display
     else :
@@ -263,5 +246,39 @@ function load_more_photos() {
     wp_reset_postdata();
 }
 
+
+function enqueue_photo_navigation_script() {
+    // Enqueue votre script
+    wp_enqueue_script('miniature-script', get_template_directory_uri() . '/assets/js/miniature.js', array('jquery'), null, true);
+
+    // Localiser les variables PHP et les passer à JavaScript
+    $all_thumbnails = [];
+    $all_photo_ids = [];
+
+    // Récupérer toutes les photos
+    $all_photos_query = new WP_Query(array(
+        'post_type' => 'photo',
+        'posts_per_page' => -1,  // Charger toutes les photos
+        'orderby' => 'date',
+        'order' => 'ASC'
+    ));
+
+    // Stocker les informations dans les tableaux
+    if ($all_photos_query->have_posts()) :
+        while ($all_photos_query->have_posts()) : $all_photos_query->the_post();
+            $all_thumbnails[] = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
+            $all_photo_ids[] = get_permalink(get_the_ID());
+        endwhile;
+    endif;
+
+    wp_reset_postdata();
+
+    // Localiser les variables et les transmettre au script JS
+    wp_localize_script('miniature-script', 'photoData', array(
+        'thumbnails' => $all_thumbnails,
+        'photo_ids' => $all_photo_ids
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_photo_navigation_script');
 
 
