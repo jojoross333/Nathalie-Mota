@@ -3,24 +3,38 @@
 
 document.addEventListener("DOMContentLoaded", function() {
   // Sélectionner les éléments
-  const contactBtnHeader = document.getElementById('menu-item-27');  // ID du bouton "Contact" du header
-  const contactBtnPhoto = document.getElementById('contact-btn');    // ID du bouton "Contact" dans single-photo.php
-  const modale = document.getElementById('modale');  // La modale de contact
+  const contactBtnHeader = document.getElementById('menu-item-27'); // ID du bouton "Contact" dans le header
+  const refBtn = document.getElementById('ref-btn');  // ID du bouton "Contact" dans single-photo.php
+  const modale = document.getElementById('modale'); // La modale de contact
   const closeBtn = document.querySelector('.close-btn'); // Bouton de fermeture de la modale
+  const photoReferenceField = document.querySelector('input[name="your-ref"]'); // Le champ caché pour la référence
 
   // Afficher la modale au clic sur "Contact" dans le header
-  if (contactBtnHeader) {
+  if (contactBtnHeader !== null) {
       contactBtnHeader.addEventListener('click', function(event) {
-          event.preventDefault();  // Empêcher le comportement par défaut (si c'est un lien)
+          event.preventDefault();  // Empêcher le comportement par défaut
           modale.classList.add('visible'); // Afficher la modale
+          // Optionnel: Remplir le champ de référence avec une valeur par défaut si besoin
+          if (photoReferenceField) {
+              photoReferenceField.value = '';  // Vide la référence si tu veux qu'elle soit vide par défaut
+          }
       });
   }
 
   // Afficher la modale au clic sur "Contact" dans single-photo.php
-  if (contactBtnPhoto) {
-      contactBtnPhoto.addEventListener('click', function(event) {
-          event.preventDefault();  // Empêcher le comportement par défaut (si c'est un lien)
+  if (refBtn !== null) {
+      refBtn.addEventListener('click', function(event) {
+          event.preventDefault();  // Empêcher le comportement par défaut
           modale.classList.add('visible'); // Afficher la modale
+
+          // Récupérer la référence de la photo depuis le bouton
+          const reference = refBtn.getAttribute('data-ref');
+          
+          // Vérifier si le champ caché existe et le remplir avec la référence
+          if (photoReferenceField) {
+              photoReferenceField.value = reference;  // Remplir le champ caché avec la référence
+              console.log("Référence de la photo : " + reference);  // Vérification dans la console
+          }
       });
   }
 
@@ -40,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   }
 });
+
 
 // CODE POUR LE BURGER EN RESPONSIVE
 

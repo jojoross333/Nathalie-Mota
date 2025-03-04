@@ -67,7 +67,7 @@ if ($next_post) {
     <div class="contact-content">
         <div class="contact-ref">
             <p class="interesse">Cette photo vous intéresse ?</p>
-            <button id="contact-btn" data-ref="<?php echo $reference; ?>">Contact</button>
+            <button id="ref-btn" data-ref="<?php echo $reference; ?>">Contact</button>
         </div>
 
         <!-- Section des miniatures et flèches -->
@@ -86,36 +86,36 @@ if ($next_post) {
     </div>
 
 
-<!-- Section des photos apparentées -->
-<div class="related-photos">
-    <h3>Vous aimerez aussi</h3>
-    <div class="related-photos-list">
-        <?php
-        // Récupérer la première catégorie de la photo
-        $category_ids = wp_list_pluck($categories, 'term_id');
-        
-        // Inclure le fichier load.php pour afficher les photos apparentées
-        // Ajouter un argument pour récupérer uniquement les photos de la même catégorie et exclure la photo actuelle
-        $args = array(
-            'post_type' => 'photo',
-            'posts_per_page' => 2, // Limiter à 2 photos seulement
-            'post__not_in' => array(get_the_ID()), // Exclure la photo actuelle
-            'tax_query' => array(
-                array(
-                    'taxonomy' => 'categorie',
-                    'field' => 'id',
-                    'terms' => $category_ids,
-                    'operator' => 'IN',
-                )
-            ),
-        );
-        
-        // Appeler la fonction pour afficher les photos apparentées en passant les arguments
-        afficher_photos_catalogue($args); // load pour effet survol et appliquer a tous 
+    <!-- Section des photos apparentées -->
+    <div class="related-photos">
+        <h3>Vous aimerez aussi</h3>
+        <div class="related-photos-list">
+            <?php
+            // Récupérer la première catégorie de la photo
+            $category_ids = wp_list_pluck($categories, 'term_id');
+            
+            // Inclure le fichier load.php pour afficher les photos apparentées
+            // Ajouter un argument pour récupérer uniquement les photos de la même catégorie et exclure la photo actuelle
+            $args = array(
+                'post_type' => 'photo',
+                'posts_per_page' => 2, // Limiter à 2 photos seulement
+                'post__not_in' => array(get_the_ID()), // Exclure la photo actuelle
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'categorie',
+                        'field' => 'id',
+                        'terms' => $category_ids,
+                        'operator' => 'IN',
+                    )
+                ),
+            );
+            
+            // Appeler la fonction pour afficher les photos apparentées en passant les arguments
+            afficher_photos_catalogue($args); // load pour effet survol et appliquer a tous 
 
-        ?>
+            ?>
+        </div>
     </div>
-</div>
 
 
 </section>
