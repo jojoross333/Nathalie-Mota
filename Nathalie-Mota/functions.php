@@ -71,6 +71,13 @@ function create_photo_taxonomy() {
         'rewrite' => array('slug' => 'format'),
         'hierarchical' => true,
     ));
+
+    // Taxonomie "Réseau" (ajout d'une taxonomie hiérarchique)
+    register_taxonomy('reseau', 'photo', array(
+        'label' => __('Réseaux sociaux'),
+        'rewrite' => array('slug' => 'reseau'),
+        'hierarchical' => true, // Réseau hiérarchique pour les cases à cocher
+    ));
 }
 
 add_action('init', 'create_photo_taxonomy');
@@ -126,7 +133,7 @@ function filtrer_photos() {
 
     // Vérifier si le filtre "Trier par" est passé dans les filtres
     if (isset($filters['annee'])) {
-        $args['order'] = $filters['annee'];  // soit 'ASC' soit 'DESC'
+        $args['order'] = $filters['annee']; 
     }
 
     // Ajouter les filtres dynamiques (catégorie, format, année) dans la requête

@@ -3,9 +3,9 @@ jQuery(function($) {
     $('.taxonomy-select').on('change', function() {
         var filters = {}; // Objet pour stocker tous les filtres
 
-        // Récupérer la valeur de chaque filtre
+        // Je récupère tous les filtres de mon CPT UI WP ( on peut donc ajouter via l'interface sans code de nouvelle taxonomie)
         $('.taxonomy-select').each(function() {
-            var filterId = $(this).attr('id'); // Catégories, formats, etc.
+            var filterId = $(this).attr('id'); // Catégories, formats du cpt ui.
             var filterValue = $(this).val();  // Valeur du filtre (par exemple, la catégorie sélectionnée)
             
             if (filterValue) {
@@ -22,7 +22,7 @@ jQuery(function($) {
             }
         });
 
-        // Effectuer la requête AJAX
+        // Ici je fais appel a ajax pour la rêquete a WP (mon functions.php)
         $.ajax({
             url: ajax_filter_obj.ajaxurl,
             method: 'POST',

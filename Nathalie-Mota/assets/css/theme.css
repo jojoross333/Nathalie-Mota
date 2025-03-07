@@ -408,13 +408,13 @@ h1 {
   z-index: 11;
 }
 
-.taxo-gauche {
+.filtre-gauche {
   display: flex;
   margin-left: 160px;
   gap: 36px;
 }
 
-.taxo-droite {
+.filtre-droite {
   align-items: flex;
   margin-right: 160px;
 }
