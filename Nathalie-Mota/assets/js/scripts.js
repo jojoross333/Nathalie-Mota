@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const contactBtnHeader = document.getElementById('menu-item-27'); // ID du bouton "Contact" dans le header
   const refBtn = document.getElementById('ref-btn');  // ID du bouton "Contact" dans single-photo.php
   const modale = document.getElementById('modale'); // La modale de contact
-  const closeBtn = document.querySelector('.close-btn'); // Bouton de fermeture de la modale
   const photoReferenceField = document.querySelector('input[name="your-ref"]'); // Le champ caché pour la référence
 
   // Afficher la modale au clic sur "Contact" dans le header
@@ -37,14 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
           }
       });
   }
-
-  // Fermer la modale au clic sur le bouton "×"
-  if (closeBtn) {
-      closeBtn.addEventListener('click', function() {
-          modale.classList.remove('visible'); // Fermer la modale
-      });
-  }
-
   // Fermer la modale si on clique en dehors de la boîte de dialogue (overlay)
   if (modale) {
       modale.addEventListener('click', function(event) {

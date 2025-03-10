@@ -5,11 +5,11 @@ jQuery(function($) {
 
         // Je récupère tous les filtres de mon CPT UI WP ( on peut donc ajouter via l'interface sans code de nouvelle taxonomie)
         $('.taxonomy-select').each(function() {
-            var filterId = $(this).attr('id'); // Catégories, formats du cpt ui.
-            var filterValue = $(this).val();  // Valeur du filtre (par exemple, la catégorie sélectionnée)
+            var filterId = $(this).attr('id'); //permet de récuperer tout type de filtre (récupere l'id de chaque select)
+            var filterValue = $(this).val();  // récupere la valeur du filtre 
             
             if (filterValue) {
-                filters[filterId] = filterValue; // Ajouter le filtre à l'objet filters
+                filters[filterId] = filterValue; // Ajoute le filtre à l'objet filters
             }
         });
 
@@ -24,16 +24,15 @@ jQuery(function($) {
 
         // Ici je fais appel a ajax pour la rêquete a WP (mon functions.php)
         $.ajax({
-            url: ajax_filter_obj.ajaxurl,
-            method: 'POST',
+            url: ajax_filter_obj.ajaxurl, // url utilisé par wp pour les rêquete ajax 
+            method: 'POST',   //post pour envoyé les données au serveur 
             data: {
-                action: 'filtrer_photos', // Action côté PHP
+                action: 'filtrer_photos', // // action définie dans le back office 
                 filters: filters, // Objet contenant tous les filtres
                 photoArray: photoIds  // Liste des photos déjà affichées
             },
-            success: function(response) {
-                $('#photo-display').html(response); // Remplace le contenu avec les photos filtrées
-        
+            success: function(response) { //reçoit la réponse du serveur 
+                $('#photo-display').html(response); //affiche le contenu après la réponse wp sans recahrgement de page 
             }
         });
     });

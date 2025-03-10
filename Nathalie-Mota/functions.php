@@ -19,9 +19,9 @@ function nathalie_mota_scripts() {
     // Charger le script pour le bouton "Charger plus" (load-more.js)
     wp_enqueue_script('load-more', get_template_directory_uri() . '/assets/js/load-more.js', array('jquery'), null, true);
     
-    // Localiser le script pour passer l'URL d'AJAX à JavaScript
+    // Localiser le script "load-more" url pour passer l'URL d'AJAX à JavaScript
     wp_localize_script('load-more', 'MyAjax', array(
-        'ajaxurl' => admin_url('admin-ajax.php')  // URL pour l'appel AJAX
+        'ajaxurl' => admin_url('admin-ajax.php')  // URL pour l'appel AJAX dans le fichier amdin-ajax.php responsable de la gestion ajax dans wp 
     ));
 
     // Ajouter Select2 via CDN
@@ -71,13 +71,6 @@ function create_photo_taxonomy() {
         'rewrite' => array('slug' => 'format'),
         'hierarchical' => true,
     ));
-
-    // Taxonomie "Réseau" (ajout d'une taxonomie hiérarchique)
-    register_taxonomy('reseau', 'photo', array(
-        'label' => __('Réseaux sociaux'),
-        'rewrite' => array('slug' => 'reseau'),
-        'hierarchical' => true, // Réseau hiérarchique pour les cases à cocher
-    ));
 }
 
 add_action('init', 'create_photo_taxonomy');
@@ -114,16 +107,16 @@ function afficher_photos_catalogue($args = array()) {
 
 // -------Action AJAX pour filtrer les photos----------------------------------------
 
-// ------ Action AJAX pour filtrer les photos -------
-add_action('wp_ajax_filtrer_photos', 'filtrer_photos');
-add_action('wp_ajax_nopriv_filtrer_photos', 'filtrer_photos');
+//Enregistre les actions pour écouter les requêtes AJAX
+add_action('wp_ajax_filtrer_photos', 'filtrer_photos'); //utilisateur connecté 
+add_action('wp_ajax_nopriv_filtrer_photos', 'filtrer_photos'); //utilisateur non connecté 
 
 function filtrer_photos() {
     // Récupérer les filtres envoyés via AJAX
     $filters = isset($_POST['filters']) ? $_POST['filters'] : [];
 
-    // Paramètres de base de la requête WP_Query pour récupérer les photos filtrées
-    $args = array(
+    // Prépare la requête wp_query pour récupérer les photos filtrées 
+    $args = array( 
         'post_type' => 'photo',  // Le type de post
         'posts_per_page' => 8,   // Nombre de photos à afficher
         'orderby' => 'date',     // Trier par date par défaut
@@ -142,7 +135,7 @@ function filtrer_photos() {
             if ($taxonomy === 'annee') {
                 $args['year'] = $value; // Filtrer par année
             } else {
-                $args['tax_query'][] = array(
+                $args['tax_query'][] = array( // filtre ajouter a la requete via tax_query 
                     'taxonomy' => $taxonomy,  // Catégorie, format, etc.
                     'field' => 'slug',
                     'terms' => $value,
@@ -152,10 +145,10 @@ function filtrer_photos() {
         }
     }
 
-    // Exécuter la requête WP_Query avec les filtres
-    $query = new WP_Query($args);
+    // Exécuter la requête WP_Query 
+    $query = new WP_Query($args); //wp_query permet de récupérer les données 
 
-    if ($query->have_posts()) :
+    if ($query->have_posts()) : //si photos trouvées 
         echo '<div class="photo-display">';  // Ajout de la div "photo-display"
         while ($query->have_posts()) : $query->the_post();
             // Inclure le fichier load.php pour afficher chaque photo
@@ -177,7 +170,7 @@ add_action('wp_enqueue_scripts', 'enqueue_ajax_filter_script');
 function enqueue_ajax_filter_script() {
     wp_enqueue_script('ajax-filter', get_template_directory_uri() . '/assets/js/ajax-filter.js', array('jquery'), null, true);
 
-    // Localiser le script pour passer l'URL d'AJAX à JavaScript
+    // Url ajax des filtres pour l'envoyer a admin-ajax.php  
     wp_localize_script('ajax-filter', 'ajax_filter_obj', array(
         'ajaxurl' => admin_url('admin-ajax.php'),
     ));
@@ -186,7 +179,7 @@ function enqueue_ajax_filter_script() {
 
 // ------------Action AJAX pour charger plus de photos---------------__________________________________
 
-// ------- Action AJAX pour charger plus de photos -------
+
 add_action('wp_ajax_load_more_photos', 'load_more_photos');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos');
 
@@ -203,10 +196,10 @@ function load_more_photos() {
         'posts_per_page' => 8,  // Nombre de photos à charger
         'orderby' => 'date',
         'order' => 'ASC',
-        'tax_query' => array(),
+        'tax_query' => array(), // tableau des filtres
     );
 
-    // Ajouter les filtres pour la catégorie, le format, l'année
+    // Si une catégorie est spécifiée, on l'ajoute à la requête pour filtrer les photos par catégorie
     if ($category) {
         $args['tax_query'][] = array(
             'taxonomy' => 'categorie',
@@ -215,7 +208,7 @@ function load_more_photos() {
             'operator' => 'IN',
         );
     }
-
+    // si un format est spécifiée
     if ($format) {
         $args['tax_query'][] = array(
             'taxonomy' => 'format',
@@ -224,7 +217,7 @@ function load_more_photos() {
             'operator' => 'IN',
         );
     }
-
+    // si une année est spécifiée
     if ($year) {
         $args['year'] = $year;
     }
@@ -250,9 +243,10 @@ function load_more_photos() {
     endif;
 
     die(); // Terminer l'exécution après la réponse AJAX
-    wp_reset_postdata();
+    wp_reset_postdata();  // Réinitialise la requête WordPress à son état initial
 }
 
+// action  miniature.js____
 
 function enqueue_photo_navigation_script() {
     // Enqueue votre script

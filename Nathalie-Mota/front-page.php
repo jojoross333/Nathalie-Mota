@@ -23,12 +23,11 @@
     <?php get_template_part('templates/filtres'); ?>   <!-- template des filtres -->
 </section>
 
-<section id="catalogueContainer">
-    <div id="photo-display">
+<section id="catalogueContainer"> 
+    <div id="photo-display"> <!-- id pour afficher charger plus -->
         <?php afficher_photos_catalogue(); // Affiche les photos par défaut ?>
     </div>
     <!-- Bouton Charger Plus -->
-    <div id="load-moreContainer"></div>
     <button id="btnLoad-more">Charger Plus</button>
 </section>
 

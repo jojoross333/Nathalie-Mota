@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
     $('#btnLoad-more').on('click', function() {
-        load_more_photos(); // Ta fonction pour charger plus de photos
+        load_more_photos(); //  fonction pour charger plus de photos
     });
 
     function load_more_photos() {

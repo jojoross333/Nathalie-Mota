@@ -94,7 +94,7 @@ if ($next_post) {
             // Récupérer la première catégorie de la photo
             $category_ids = wp_list_pluck($categories, 'term_id');
             
-            // Inclure le fichier load.php pour afficher les photos apparentées
+            
             // Ajouter un argument pour récupérer uniquement les photos de la même catégorie et exclure la photo actuelle
             $args = array(
                 'post_type' => 'photo',

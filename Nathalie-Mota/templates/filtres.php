@@ -1,39 +1,40 @@
 <?php
-// Affichage des filtres pour les catégories, formats et autres taxonomies personnalisées
-$taxonomy_filters = [
-    'categorie' => 'CATEGORIE', // Label pour le filtre "Catégorie"
-    'format' => 'FORMATS', // Label pour le filtre "Format"
+// Affichage des filtres pour les catégories et formats
+$taxonomy = [
+    'categorie' => 'CATEGORIES',
+    'format' => 'FORMATS',
 ];
 
-echo "<div class='filtre-gauche'>"; // Conteneur des filtres à gauche
-
-foreach ($taxonomy_filters as $taxonomy_slug => $filter_label) {
+// Démarrer le conteneur des filtres à gauche (conteneur pour les catégories et formats)
+echo "<div class='filtre-gauche'>";
+// Pour chaque taxonomie dans le tableau $taxonomy
+foreach ($taxonomy as $taxonomy_slug => $label) { //génére automatiquement un select pour chaque taxo définie
+    // Utiliser la fonction get_terms() pour récupérer toutes les options disponibles pour chaque taxonomie
     $terms = get_terms($taxonomy_slug);
-
+    // Vérifier qu'il n'y a pas d'erreur et que la taxonomie contient des termes
     if (!is_wp_error($terms) && !empty($terms)) {
-        echo "<div {$taxonomy_slug}-filter'>";  
-
-        // Affichage du label avant le select (que l'utilisateur verra avant de choisir)
-        echo "<select id='{$taxonomy_slug}' class='select-filter custom-select taxonomy-select'>"; 
-        echo "<option value='' disabled selected>{$filter_label}</option>";  // Valeur par défaut affichée dans la case
-
+        // Créer un élément <select> pour afficher les options de la taxonomie
+        echo "<select id='{$taxonomy_slug}' class='custom-select taxonomy-select'>"; // class pour le style des taxo 
+        // Ajouter une option par défaut vide
+        echo "<option value=''>{$label}</option>";
+        // Boucler sur les termes de la taxonomie (par exemple, les catégories de photos) pour créer les options du <select>
         foreach ($terms as $term) {
-            echo "<option value='{$term->slug}'>{$term->name}</option>";  // Affichage des termes
+            echo "<option value='{$term->slug}'>{$term->name}</option>";
         }
 
-        echo "</select>";
-        echo "</div>"; // Fermer le div du filtre
+        echo "</select>"; // fin select filtre gauche
     }
 }
 
-echo "</div>"; // Fermer le conteneur des filtres à gauche
+echo "</div>"; // fin du contenu
 
-// Section de tri pour les photos (Trier par)
-echo "<div class='filtre-droite'>";  // Conteneur pour "Trier par"
-echo "<select id='sort_annee' class='select-filter custom-select taxonomy-select'>";
-echo "<option value='' disabled selected>Trier par</option>";  // Valeur par défaut affichée dans la case
+echo "<div class='filtre-droite'>"; // filtre indépendant pour trier année 
+
+echo "<select id='annee' class='custom-select taxonomy-select'>";
+echo "<option value=''>TRIER PAR</option>";
 echo "<option value='ASC'>Du plus ancien au plus récent</option>";
 echo "<option value='DESC'>Du plus récent au plus ancien</option>";
 echo "</select>";
-echo "</div>"; // Fermer le conteneur de tri
+
+echo "</div>";
 ?>
